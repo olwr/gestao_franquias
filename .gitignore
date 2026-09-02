@@ -1,0 +1,6 @@
+bin/
+obj/
+*.user
+.vs/
+.idea/
+Gestao_Franquias.Api/appsettings.Development.json

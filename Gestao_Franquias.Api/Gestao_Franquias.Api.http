@@ -1,6 +1,585 @@
-@Gestao_Franquias.Api_HostAddress = http://localhost:5221
+### =============================================================
+### Gestão de Franquias API — Roteiro de testes (.http)
+### Sintaxe do JetBrains HTTP Client (Rider) — encadeamento via
+### blocos "> {% client.global.set(...) %}" após cada requisição.
+### Ajuste @baseUrl conforme a porta exibida no seu `dotnet run`
+### (ou 5016 se estiver rodando via docker compose).
+### =============================================================
 
-GET {{Gestao_Franquias.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+@baseUrl = http://localhost:56735/api
 
-###
+### -----------------------------------------------------------
+### AUTH — login com os 3 perfis do seed (senha: SenhaForte123)
+### -----------------------------------------------------------
+
+### Login como Administrador
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@franquias.com",
+  "senha": "SenhaForte123"
+}
+
+> {%
+    client.global.set("token_admin", response.body.token);
+%}
+
+### Login como Gestor de Unidade (Unidade Centro)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "gestor.centro@franquias.com",
+  "senha": "SenhaForte123"
+}
+
+> {%
+    client.global.set("token_gestor", response.body.token);
+%}
+
+### Login como Operador (Unidade Shopping)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "operador.shopping@franquias.com",
+  "senha": "SenhaForte123"
+}
+
+> {%
+    client.global.set("token_operador", response.body.token);
+%}
+
+### Login com credenciais inválidas (esperado: 401 Unauthorized)
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@franquias.com",
+  "senha": "SenhaErrada999"
+}
+
+
+### -----------------------------------------------------------
+### USUÁRIOS (somente Administrador)
+### -----------------------------------------------------------
+
+### Listar usuários
+GET {{baseUrl}}/usuarios
+Authorization: Bearer {{token_admin}}
+
+### Buscar usuário por id (1 = admin do seed)
+GET {{baseUrl}}/usuarios/1
+Authorization: Bearer {{token_admin}}
+
+### Criar novo usuário (Gestor para a Unidade Shopping)
+POST {{baseUrl}}/usuarios
+Content-Type: application/json
+Authorization: Bearer {{token_admin}}
+
+{
+  "nome": "Juliana Nova Gestora",
+  "email": "juliana.gestora@franquias.com",
+  "senha": "OutraSenha456",
+  "perfil": "GestorUnidade",
+  "unidadeFranqueadaId": 2
+}
+
+> {%
+    client.global.set("usuario_criado_id", response.body.id);
+%}
+
+### Tentar criar usuário com e-mail já existente (esperado: 400 Bad Request)
+POST {{baseUrl}}/usuarios
+Content-Type: application/json
+Authorization: Bearer {{token_admin}}
+
+{
+  "nome": "Duplicado",
+  "email": "admin@franquias.com",
+  "senha": "Qualquer123",
+  "perfil": "Operador",
+  "unidadeFranqueadaId": 1
+}
+
+### Inativar usuário recém-criado
+DELETE {{baseUrl}}/usuarios/{{usuario_criado_id}}
+Authorization: Bearer {{token_admin}}
+
+
+### -----------------------------------------------------------
+### UNIDADES FRANQUEADAS
+### -----------------------------------------------------------
+
+### Listar todas as unidades (qualquer usuário autenticado)
+GET {{baseUrl}}/unidades
+Authorization: Bearer {{token_gestor}}
+
+### Listar apenas unidades ativas
+GET {{baseUrl}}/unidades?ativo=true
+Authorization: Bearer {{token_admin}}
+
+### Filtrar unidades por cidade
+GET {{baseUrl}}/unidades?cidade=Pelotas
+Authorization: Bearer {{token_admin}}
+
+### Buscar unidade por id (1 = Unidade Centro do seed)
+GET {{baseUrl}}/unidades/1
+Authorization: Bearer {{token_admin}}
+
+### Criar nova unidade (Administrador)
+POST {{baseUrl}}/unidades
+Content-Type: application/json
+Authorization: Bearer {{token_admin}}
+
+{
+  "nome": "Unidade Aeroporto",
+  "cnpj": "99988877000155",
+  "endereco": "Av. do Aeroporto, 1200",
+  "cidade": "Pelotas",
+  "dataInicio": "2026-09-01T00:00:00Z",
+  "percentualRoyalty": 5.5,
+  "franqueadoraId": 1
+}
+
+> {%
+    client.global.set("unidade_criada_id", response.body.id);
+%}
+
+### Tentar criar unidade com CNPJ já existente (esperado: 400 Bad Request)
+POST {{baseUrl}}/unidades
+Content-Type: application/json
+Authorization: Bearer {{token_admin}}
+
+{
+  "nome": "Unidade Duplicada",
+  "cnpj": "12345678000101",
+  "endereco": "Rua Teste, 1",
+  "cidade": "Pelotas",
+  "dataInicio": "2026-09-01T00:00:00Z",
+  "percentualRoyalty": 5.0,
+  "franqueadoraId": 1
+}
+
+### Atualizar dados da unidade recém-criada
+PUT {{baseUrl}}/unidades/{{unidade_criada_id}}
+Content-Type: application/json
+Authorization: Bearer {{token_admin}}
+
+{
+  "nome": "Unidade Aeroporto (Renovada)",
+  "endereco": "Av. do Aeroporto, 1500",
+  "cidade": "Pelotas",
+  "percentualRoyalty": 6.0
+}
+
+### Tentar criar/editar unidade como Operador (esperado: 403 Forbidden)
+POST {{baseUrl}}/unidades
+Content-Type: application/json
+Authorization: Bearer {{token_operador}}
+
+{
+  "nome": "Unidade Não Autorizada",
+  "cnpj": "11122233000144",
+  "endereco": "Rua Teste, 99",
+  "cidade": "Pelotas",
+  "dataInicio": "2026-09-01T00:00:00Z",
+  "percentualRoyalty": 5.0,
+  "franqueadoraId": 1
+}
+
+### Inativar a unidade recém-criada (exclusão lógica)
+DELETE {{baseUrl}}/unidades/{{unidade_criada_id}}
+Authorization: Bearer {{token_admin}}
+
+### Buscar unidade inexistente (esperado: 404 Not Found)
+GET {{baseUrl}}/unidades/9999
+Authorization: Bearer {{token_admin}}
+
+### Acessar unidades sem token (esperado: 401 Unauthorized)
+GET {{baseUrl}}/unidades
+
+
+### -----------------------------------------------------------
+### CATEGORIAS E PRODUTOS
+### -----------------------------------------------------------
+
+### Listar categorias
+GET {{baseUrl}}/categorias
+Authorization: Bearer {{token_gestor}}
+
+### Criar nova categoria
+POST {{baseUrl}}/categorias
+Content-Type: application/json
+Authorization: Bearer {{token_admin}}
+
+{
+  "nome": "Combos"
+}
+
+### Listar todos os produtos
+GET {{baseUrl}}/produtos
+Authorization: Bearer {{token_gestor}}
+
+### Filtrar produtos por categoria (1 = Bebidas do seed)
+GET {{baseUrl}}/produtos?categoriaId=1
+Authorization: Bearer {{token_gestor}}
+
+### Buscar produto por nome (busca parcial)
+GET {{baseUrl}}/produtos?nome=Hamb
+Authorization: Bearer {{token_gestor}}
+
+### Criar novo produto (categoria 2 = Lanches, fornecedor 2 = Alimentos & Cia)
+POST {{baseUrl}}/produtos
+Content-Type: application/json
+Authorization: Bearer {{token_admin}}
+
+{
+  "nome": "Wrap de Frango",
+  "descricao": "Wrap integral com frango grelhado e salada",
+  "precoBase": 18.50,
+  "categoriaId": 2,
+  "fornecedorId": 2
+}
+
+> {%
+    client.global.set("produto_criado_id", response.body.id);
+%}
+
+### Inativar produto recém-criado
+DELETE {{baseUrl}}/produtos/{{produto_criado_id}}
+Authorization: Bearer {{token_admin}}
+
+
+### -----------------------------------------------------------
+### FORNECEDORES
+### -----------------------------------------------------------
+
+### Listar fornecedores
+GET {{baseUrl}}/fornecedores
+Authorization: Bearer {{token_gestor}}
+
+### Criar novo fornecedor
+POST {{baseUrl}}/fornecedores
+Content-Type: application/json
+Authorization: Bearer {{token_admin}}
+
+{
+  "nome": "Embalagens Sul Ltda",
+  "cnpj": "55566677000188",
+  "contato": "(53) 3222-3000"
+}
+
+### Tentar criar fornecedor com CNPJ já existente (esperado: 400 Bad Request)
+POST {{baseUrl}}/fornecedores
+Content-Type: application/json
+Authorization: Bearer {{token_admin}}
+
+{
+  "nome": "Duplicado Ltda",
+  "cnpj": "33344455000166",
+  "contato": "(53) 3000-0000"
+}
+
+
+### -----------------------------------------------------------
+### ESTOQUE
+### -----------------------------------------------------------
+
+### Listar estoque da Unidade Centro (id 1)
+GET {{baseUrl}}/estoques/unidade/1
+Authorization: Bearer {{token_gestor}}
+
+### Listar estoque da Unidade Shopping (id 2)
+GET {{baseUrl}}/estoques/unidade/2
+Authorization: Bearer {{token_operador}}
+
+### Listar itens em estoque crítico (deve incluir o Brownie da Unidade Shopping, saldo=3 < mínimo=10)
+GET {{baseUrl}}/estoques/criticos
+Authorization: Bearer {{token_admin}}
+
+### Registrar entrada de estoque (Refrigerante, produto 1, na Unidade Centro, unidade 1)
+POST {{baseUrl}}/estoques/movimentacoes
+Content-Type: application/json
+Authorization: Bearer {{token_gestor}}
+
+{
+  "unidadeFranqueadaId": 1,
+  "produtoServicoId": 1,
+  "tipo": "Entrada",
+  "quantidade": 30,
+  "motivo": "Reposição semanal"
+}
+
+### Registrar saída manual (ajuste de perda/quebra)
+POST {{baseUrl}}/estoques/movimentacoes
+Content-Type: application/json
+Authorization: Bearer {{token_gestor}}
+
+{
+  "unidadeFranqueadaId": 1,
+  "produtoServicoId": 1,
+  "tipo": "Saida",
+  "quantidade": 5,
+  "motivo": "Produto danificado"
+}
+
+### Tentar retirar mais do que o saldo disponível (esperado: 400 Bad Request)
+POST {{baseUrl}}/estoques/movimentacoes
+Content-Type: application/json
+Authorization: Bearer {{token_gestor}}
+
+{
+  "unidadeFranqueadaId": 1,
+  "produtoServicoId": 1,
+  "tipo": "Saida",
+  "quantidade": 99999,
+  "motivo": "Teste de estoque insuficiente"
+}
+
+### Tipo de movimentação inválido (esperado: 400 Bad Request)
+POST {{baseUrl}}/estoques/movimentacoes
+Content-Type: application/json
+Authorization: Bearer {{token_gestor}}
+
+{
+  "unidadeFranqueadaId": 1,
+  "produtoServicoId": 1,
+  "tipo": "Transferencia",
+  "quantidade": 1,
+  "motivo": "Tipo inválido de propósito"
+}
+
+
+### -----------------------------------------------------------
+### VENDAS (regra de negócio central: transação + débito de estoque)
+### -----------------------------------------------------------
+
+### Registrar venda válida na Unidade Centro (produtos 1 e 3, usuário 2 = Gestor)
+POST {{baseUrl}}/vendas
+Content-Type: application/json
+Authorization: Bearer {{token_gestor}}
+
+{
+  "unidadeFranqueadaId": 1,
+  "usuarioId": 2,
+  "itens": [
+    { "produtoServicoId": 1, "quantidade": 2 },
+    { "produtoServicoId": 3, "quantidade": 1 }
+  ]
+}
+
+> {%
+    client.global.set("venda_criada_id", response.body.id);
+%}
+
+### Listar vendas da Unidade Centro
+GET {{baseUrl}}/vendas/unidade/1
+Authorization: Bearer {{token_gestor}}
+
+### Listar vendas da Unidade Centro filtrando por período
+GET {{baseUrl}}/vendas/unidade/1?inicio=2026-09-01T00:00:00Z&fim=2026-09-30T23:59:59Z
+Authorization: Bearer {{token_admin}}
+
+### Tentar vender com quantidade acima do estoque disponível (esperado: 400 Bad Request)
+POST {{baseUrl}}/vendas
+Content-Type: application/json
+Authorization: Bearer {{token_gestor}}
+
+{
+  "unidadeFranqueadaId": 1,
+  "usuarioId": 2,
+  "itens": [
+    { "produtoServicoId": 5, "quantidade": 99999 }
+  ]
+}
+
+### Tentar registrar venda sem nenhum item (esperado: 400 Bad Request — validação do DTO)
+POST {{baseUrl}}/vendas
+Content-Type: application/json
+Authorization: Bearer {{token_gestor}}
+
+{
+  "unidadeFranqueadaId": 1,
+  "usuarioId": 2,
+  "itens": []
+}
+
+### Tentar registrar venda para a unidade inativa do seed (id 3) — esperado: 400 Bad Request
+POST {{baseUrl}}/vendas
+Content-Type: application/json
+Authorization: Bearer {{token_admin}}
+
+{
+  "unidadeFranqueadaId": 3,
+  "usuarioId": 1,
+  "itens": [
+    { "produtoServicoId": 1, "quantidade": 1 }
+  ]
+}
+
+### Tentar registrar venda para produto inexistente (esperado: 404 Not Found)
+POST {{baseUrl}}/vendas
+Content-Type: application/json
+Authorization: Bearer {{token_gestor}}
+
+{
+  "unidadeFranqueadaId": 1,
+  "usuarioId": 2,
+  "itens": [
+    { "produtoServicoId": 9999, "quantidade": 1 }
+  ]
+}
+
+
+### -----------------------------------------------------------
+### ROYALTIES (somente Administrador)
+### -----------------------------------------------------------
+
+### Listar royalties da Unidade Centro (deve trazer o registro "Pago" do seed)
+GET {{baseUrl}}/royalties/unidade/1
+Authorization: Bearer {{token_admin}}
+
+### Listar royalties da Unidade Shopping (deve trazer o registro "Pendente" do seed)
+GET {{baseUrl}}/royalties/unidade/2
+Authorization: Bearer {{token_admin}}
+
+### Calcular royalty do mês corrente para a Unidade Centro
+POST {{baseUrl}}/royalties/calcular?unidadeId=1&periodoReferencia=2026-09-01
+Authorization: Bearer {{token_admin}}
+
+> {%
+    client.global.set("royalty_calculado_id", response.body.id);
+%}
+
+### Registrar pagamento do royalty recém-calculado
+PUT {{baseUrl}}/royalties/{{royalty_calculado_id}}/pagamento
+Content-Type: application/json
+Authorization: Bearer {{token_admin}}
+
+{
+  "dataPagamento": "2026-09-10T00:00:00Z"
+}
+
+### Tentar acessar royalties como Gestor (esperado: 403 Forbidden — módulo restrito a Administrador)
+GET {{baseUrl}}/royalties/unidade/1
+Authorization: Bearer {{token_gestor}}
+
+
+### -----------------------------------------------------------
+### CHAMADOS DE SUPORTE
+### -----------------------------------------------------------
+
+### Listar chamados da Unidade Centro
+GET {{baseUrl}}/chamados/unidade/1
+Authorization: Bearer {{token_gestor}}
+
+### Listar chamados da Unidade Shopping
+GET {{baseUrl}}/chamados/unidade/2
+Authorization: Bearer {{token_operador}}
+
+### Abrir novo chamado (Operador da Unidade Shopping)
+POST {{baseUrl}}/chamados
+Content-Type: application/json
+Authorization: Bearer {{token_operador}}
+
+{
+  "unidadeFranqueadaId": 2,
+  "categoria": "TI",
+  "prioridade": "Alta",
+  "descricao": "Impressora de comandas não está funcionando."
+}
+
+> {%
+    client.global.set("chamado_criado_id", response.body.id);
+%}
+
+### Atualizar status do chamado recém-criado para "EmAndamento"
+PATCH {{baseUrl}}/chamados/{{chamado_criado_id}}/status
+Content-Type: application/json
+Authorization: Bearer {{token_admin}}
+
+{
+  "status": "EmAndamento"
+}
+
+### Encerrar o chamado (deve preencher DataEncerramento automaticamente)
+PATCH {{baseUrl}}/chamados/{{chamado_criado_id}}/status
+Content-Type: application/json
+Authorization: Bearer {{token_admin}}
+
+{
+  "status": "Encerrado"
+}
+
+
+### -----------------------------------------------------------
+### RELATÓRIOS
+### -----------------------------------------------------------
+
+### Faturamento por unidade (somente Administrador)
+GET {{baseUrl}}/relatorios/faturamento
+Authorization: Bearer {{token_admin}}
+
+### Faturamento por unidade, filtrado por período
+GET {{baseUrl}}/relatorios/faturamento?inicio=2026-08-01T00:00:00Z&fim=2026-09-30T23:59:59Z
+Authorization: Bearer {{token_admin}}
+
+### Produtos mais vendidos (top 5)
+GET {{baseUrl}}/relatorios/produtos-mais-vendidos?top=5
+Authorization: Bearer {{token_gestor}}
+
+### Chamados agrupados por status
+GET {{baseUrl}}/relatorios/chamados-por-status
+Authorization: Bearer {{token_gestor}}
+
+### Tentar acessar relatório de faturamento como Operador (esperado: 403 Forbidden)
+GET {{baseUrl}}/relatorios/faturamento
+Authorization: Bearer {{token_operador}}
+
+
+### -----------------------------------------------------------
+### CENÁRIOS DE ERRO — resumo para captura de evidências (seção 12.3)
+### -----------------------------------------------------------
+
+### 401 — sem token nenhum
+GET {{baseUrl}}/unidades
+
+### 401 — token inválido/corrompido
+GET {{baseUrl}}/unidades
+Authorization: Bearer token.invalido.aqui
+
+### 403 — Operador tentando criar unidade
+POST {{baseUrl}}/unidades
+Content-Type: application/json
+Authorization: Bearer {{token_operador}}
+
+{
+  "nome": "Não deveria funcionar",
+  "cnpj": "00000000000100",
+  "endereco": "Rua X",
+  "cidade": "Pelotas",
+  "dataInicio": "2026-09-01T00:00:00Z",
+  "percentualRoyalty": 5.0,
+  "franqueadoraId": 1
+}
+
+### 404 — recurso inexistente
+GET {{baseUrl}}/unidades/999999
+Authorization: Bearer {{token_admin}}
+
+### 400 — CNPJ duplicado (regra de negócio)
+POST {{baseUrl}}/unidades
+Content-Type: application/json
+Authorization: Bearer {{token_admin}}
+
+{
+  "nome": "CNPJ Duplicado",
+  "cnpj": "12345678000202",
+  "endereco": "Rua Y",
+  "cidade": "Pelotas",
+  "dataInicio": "2026-09-01T00:00:00Z",
+  "percentualRoyalty": 5.0,
+  "franqueadoraId": 1
+}

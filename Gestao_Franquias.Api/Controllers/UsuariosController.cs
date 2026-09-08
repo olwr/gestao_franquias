@@ -22,7 +22,7 @@ public class UsuariosController(IUsuarioService service) : ControllerBase
     }
 
     [HttpPost]
-    [AllowAnonymous] // primeiro cadastro (ex.: admin inicial) pode precisar ser público; avalie restringir depois
+    [Authorize(Roles = "Administrador")]
     public async Task<ActionResult<UsuarioResponseDto>> Create(UsuarioCreateDto dto)
     {
         var criado = await service.CriarAsync(dto);

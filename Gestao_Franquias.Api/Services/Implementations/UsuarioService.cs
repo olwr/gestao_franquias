@@ -19,7 +19,7 @@ public class UsuarioService(IUsuarioRepository repo, IMapper mapper) : IUsuarioS
     public async Task<IEnumerable<UsuarioResponseDto>> GetAllAsync()
     {
         var usuarios = await repo.GetAllAsync();
-        return usuarios.Select(u => mapper.Map<UsuarioResponseDto>(u));
+        return usuarios.Select(mapper.Map<UsuarioResponseDto>);
     }
 
     public async Task<UsuarioResponseDto?> GetByIdAsync(int id)

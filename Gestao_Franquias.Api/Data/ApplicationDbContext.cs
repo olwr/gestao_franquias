@@ -24,6 +24,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         modelBuilder.Entity<Usuario>().HasIndex(u => u.Email).IsUnique();
         modelBuilder.Entity<UnidadeFranqueada>().HasIndex(u => u.Cnpj).IsUnique();
         modelBuilder.Entity<Fornecedor>().HasIndex(f => f.Cnpj).IsUnique();
+        modelBuilder.Entity<Franqueadora>().HasIndex(f => f.Cnpj).IsUnique();
 
         modelBuilder.Entity<Estoque>()
             .HasIndex(e => new { e.UnidadeFranqueadaId, e.ProdutoServicoId })

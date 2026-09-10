@@ -12,7 +12,7 @@ public class UnidadeService(IUnidadeRepository repo, IMapper mapper) : IUnidadeS
         string? nome, string? cidade, bool? ativo, int page, int pageSize)
     {
         var unidades = await repo.BuscarAsync(nome, cidade, ativo, page, pageSize);
-        return unidades.Select(u => mapper.Map<UnidadeResponseDto>(u));
+        return unidades.Select(mapper.Map<UnidadeResponseDto>);
     }
 
     public async Task<UnidadeResponseDto?> ObterPorIdAsync(int id)

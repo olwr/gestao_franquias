@@ -6,7 +6,7 @@
 ### (ou 5016 se estiver rodando via docker compose).
 ### =============================================================
 
-@baseUrl = http://localhost:56735/api
+@baseUrl = http://localhost:5016/api
 
 ### -----------------------------------------------------------
 ### AUTH — login com os 3 perfis do seed (senha: SenhaForte123)
@@ -106,6 +106,92 @@ Authorization: Bearer {{token_admin}}
 ### Inativar usuário recém-criado
 DELETE {{baseUrl}}/usuarios/{{usuario_criado_id}}
 Authorization: Bearer {{token_admin}}
+
+
+### -----------------------------------------------------------
+### FRANQUEADORAS
+### -----------------------------------------------------------
+
+### Listar franqueadoras
+GET {{baseUrl}}/franqueadoras
+Authorization: Bearer {{token_gestor}}
+
+### Buscar franqueadora por id (1 = franqueadora do seed)
+GET {{baseUrl}}/franqueadoras/1
+Authorization: Bearer {{token_admin}}
+
+### Criar nova franqueadora (Administrador)
+POST {{baseUrl}}/franqueadoras
+Content-Type: application/json
+Authorization: Bearer {{token_admin}}
+
+{
+  "razaoSocial": "Rede Norte Franquias Ltda",
+  "cnpj": "22233344000155",
+  "telefone": "(51) 3000-1000",
+  "email": "contato@redenorte.com.br"
+}
+
+> {%
+    client.global.set("franqueadora_criada_id", response.body.id);
+%}
+
+### Tentar criar franqueadora com CNPJ já existente (esperado: 400 Bad Request)
+POST {{baseUrl}}/franqueadoras
+Content-Type: application/json
+Authorization: Bearer {{token_admin}}
+
+{
+  "razaoSocial": "Duplicada Ltda",
+  "cnpj": "11111111000191",
+  "telefone": "(53) 3000-0000",
+  "email": "duplicada@franquias.com.br"
+}
+
+### Atualizar dados da franqueadora recém-criada
+PUT {{baseUrl}}/franqueadoras/{{franqueadora_criada_id}}
+Content-Type: application/json
+Authorization: Bearer {{token_admin}}
+
+{
+  "razaoSocial": "Rede Norte Franquias Ltda (Atualizada)",
+  "telefone": "(51) 3000-2000",
+  "email": "novocontato@redenorte.com.br"
+}
+
+### Tentar criar franqueadora como Operador (esperado: 403 Forbidden)
+POST {{baseUrl}}/franqueadoras
+Content-Type: application/json
+Authorization: Bearer {{token_operador}}
+
+{
+  "razaoSocial": "Não deveria funcionar",
+  "cnpj": "33344455000166",
+  "telefone": "(53) 3000-0000",
+  "email": "naoautorizado@franquias.com.br"
+}
+
+### Tentar atualizar franqueadora como Gestor (esperado: 403 Forbidden)
+PUT {{baseUrl}}/franqueadoras/{{franqueadora_criada_id}}
+Content-Type: application/json
+Authorization: Bearer {{token_gestor}}
+
+{
+  "razaoSocial": "Não deveria atualizar",
+  "telefone": "(53) 3000-0000",
+  "email": "naoautorizado@franquias.com.br"
+}
+
+### Inativar a franqueadora recém-criada (exclusão lógica)
+DELETE {{baseUrl}}/franqueadoras/{{franqueadora_criada_id}}
+Authorization: Bearer {{token_admin}}
+
+### Buscar franqueadora inexistente (esperado: 404 Not Found)
+GET {{baseUrl}}/franqueadoras/9999
+Authorization: Bearer {{token_admin}}
+
+### Acessar franqueadoras sem token (esperado: 401 Unauthorized)
+GET {{baseUrl}}/franqueadoras
 
 
 ### -----------------------------------------------------------
@@ -365,8 +451,14 @@ Authorization: Bearer {{token_gestor}}
   "unidadeFranqueadaId": 1,
   "usuarioId": 2,
   "itens": [
-    { "produtoServicoId": 1, "quantidade": 2 },
-    { "produtoServicoId": 3, "quantidade": 1 }
+    {
+      "produtoServicoId": 1,
+      "quantidade": 2
+    },
+    {
+      "produtoServicoId": 3,
+      "quantidade": 1
+    }
   ]
 }
 
@@ -391,7 +483,10 @@ Authorization: Bearer {{token_gestor}}
   "unidadeFranqueadaId": 1,
   "usuarioId": 2,
   "itens": [
-    { "produtoServicoId": 5, "quantidade": 99999 }
+    {
+      "produtoServicoId": 5,
+      "quantidade": 99999
+    }
   ]
 }
 
@@ -415,7 +510,10 @@ Authorization: Bearer {{token_admin}}
   "unidadeFranqueadaId": 3,
   "usuarioId": 1,
   "itens": [
-    { "produtoServicoId": 1, "quantidade": 1 }
+    {
+      "produtoServicoId": 1,
+      "quantidade": 1
+    }
   ]
 }
 
@@ -428,7 +526,10 @@ Authorization: Bearer {{token_gestor}}
   "unidadeFranqueadaId": 1,
   "usuarioId": 2,
   "itens": [
-    { "produtoServicoId": 9999, "quantidade": 1 }
+    {
+      "produtoServicoId": 9999,
+      "quantidade": 1
+    }
   ]
 }
 
@@ -568,6 +669,18 @@ Authorization: Bearer {{token_operador}}
 ### 404 — recurso inexistente
 GET {{baseUrl}}/unidades/999999
 Authorization: Bearer {{token_admin}}
+
+### 400 — CNPJ duplicado (Franqueadora)
+POST {{baseUrl}}/franqueadoras
+Content-Type: application/json
+Authorization: Bearer {{token_admin}}
+
+{
+  "razaoSocial": "CNPJ Duplicado",
+  "cnpj": "11111111000191",
+  "telefone": "(53) 3000-0000",
+  "email": "duplicado@franquias.com.br"
+}
 
 ### 400 — CNPJ duplicado (regra de negócio)
 POST {{baseUrl}}/unidades

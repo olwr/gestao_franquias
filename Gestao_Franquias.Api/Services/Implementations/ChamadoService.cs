@@ -21,7 +21,7 @@ public class ChamadoService(IRepository<ChamadoSuporte> repo, IMapper mapper) : 
     {
         var chamados = await repo.FindAsync(c => c.UnidadeFranqueadaId == unidadeId);
         return chamados.OrderByDescending(c => c.DataAbertura)
-            .Select(c => mapper.Map<ChamadoResponseDto>(c));
+            .Select(mapper.Map<ChamadoResponseDto>);
     }
 
     public async Task AtualizarStatusAsync(int id, AtualizarStatusDto dto)

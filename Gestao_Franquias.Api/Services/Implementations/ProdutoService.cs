@@ -12,7 +12,7 @@ public class ProdutoService(IProdutoRepository repo, IMapper mapper) : IProdutoS
     public async Task<IEnumerable<ProdutoResponseDto>> BuscarAsync(string? nome, int? categoriaId, bool? ativo)
     {
         var produtos = await repo.BuscarAsync(nome, categoriaId, ativo);
-        return produtos.Select(p => mapper.Map<ProdutoResponseDto>(p));
+        return produtos.Select(mapper.Map<ProdutoResponseDto>);
     }
 
     public async Task<ProdutoResponseDto?> ObterPorIdAsync(int id)

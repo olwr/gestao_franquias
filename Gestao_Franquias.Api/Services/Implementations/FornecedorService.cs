@@ -12,7 +12,7 @@ public class FornecedorService(IFornecedorRepository repo, IMapper mapper) : IFo
     public async Task<IEnumerable<FornecedorResponseDto>> GetAllAsync()
     {
         var fornecedores = await repo.GetAllAsync();
-        return fornecedores.Select(f => mapper.Map<FornecedorResponseDto>(f));
+        return fornecedores.Select(mapper.Map<FornecedorResponseDto>);
     }
 
     public async Task<FornecedorResponseDto> CriarAsync(FornecedorCreateDto dto)

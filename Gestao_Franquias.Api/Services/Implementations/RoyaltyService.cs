@@ -47,7 +47,7 @@ public class RoyaltyService(
     {
         var royalties = await royaltyRepo.FindAsync(r => r.UnidadeFranqueadaId == unidadeId);
         return royalties.OrderByDescending(r => r.PeriodoReferencia)
-            .Select(r => mapper.Map<RoyaltyResponseDto>(r));
+            .Select(mapper.Map<RoyaltyResponseDto>);
     }
 
     public async Task RegistrarPagamentoAsync(int id, RegistrarPagamentoDto dto)

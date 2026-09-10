@@ -11,18 +11,16 @@ namespace Gestao_Franquias.Api.Services.Implementations;
 public class EstoqueService(IEstoqueRepository estoqueRepo, ApplicationDbContext context, IMapper mapper)
     : IEstoqueService
 {
-    // usado só para AddAsync de MovimentacaoEstoque diretamente
-
     public async Task<IEnumerable<EstoqueResponseDto>> ListarPorUnidadeAsync(int unidadeId)
     {
         var estoques = await estoqueRepo.ListarPorUnidadeAsync(unidadeId);
-        return estoques.Select(e => mapper.Map<EstoqueResponseDto>(e));
+        return estoques.Select(mapper.Map<EstoqueResponseDto>);
     }
 
     public async Task<IEnumerable<EstoqueResponseDto>> ListarCriticosAsync()
     {
         var criticos = await estoqueRepo.ListarCriticosAsync();
-        return criticos.Select(e => mapper.Map<EstoqueResponseDto>(e));
+        return criticos.Select(mapper.Map<EstoqueResponseDto>);
     }
 
     public async Task<MovimentacaoResponseDto> RegistrarMovimentacaoAsync(MovimentacaoCreateDto dto)
@@ -34,20 +32,19 @@ public class EstoqueService(IEstoqueRepository estoqueRepo, ApplicationDbContext
             throw new BusinessException("Quantidade deve ser maior que zero.");
 
         var estoque = await estoqueRepo.ObterAsync(dto.UnidadeFranqueadaId, dto.ProdutoServicoId);
+        var estoqueJaExistia = estoque is not null;
 
         // Cria o registro de estoque na primeira movimentação, se ainda não existir.
-        if (estoque is null)
+        estoque ??= new Estoque
         {
-            estoque = new Estoque
-            {
-                UnidadeFranqueadaId = dto.UnidadeFranqueadaId,
-                ProdutoServicoId = dto.ProdutoServicoId,
-                SaldoAtual = 0,
-                EstoqueMinimo = 0
-            };
+            UnidadeFranqueadaId = dto.UnidadeFranqueadaId,
+            ProdutoServicoId = dto.ProdutoServicoId,
+            SaldoAtual = 0,
+            EstoqueMinimo = 0
+        };
+
+        if (!estoqueJaExistia)
             await estoqueRepo.AddAsync(estoque);
-            await estoqueRepo.SaveChangesAsync();
-        }
 
         if (tipo == TipoMovimentacao.Saida && estoque.SaldoAtual < dto.Quantidade)
             throw new BusinessException(
@@ -55,17 +52,25 @@ public class EstoqueService(IEstoqueRepository estoqueRepo, ApplicationDbContext
 
         estoque.SaldoAtual += tipo == TipoMovimentacao.Entrada ? dto.Quantidade : -dto.Quantidade;
 
+        // Só chamamos Update() se o estoque já era rastreado como existente;
+        // se acabou de ser criado (estado "Added"), chamar Update() o rebaixaria
+        // para "Modified" e o INSERT nunca aconteceria.
+        if (estoqueJaExistia)
+            estoqueRepo.Update(estoque);
+
+        // Associação via propriedade de navegação: o EF Core resolve o EstoqueId
+        // automaticamente no momento do SaveChanges, mesmo o Estoque sendo novo
+        // e ainda sem Id gerado neste ponto do código.
         var movimentacao = new MovimentacaoEstoque
         {
-            EstoqueId = estoque.Id,
+            Estoque = estoque,
             Tipo = tipo,
             Quantidade = dto.Quantidade,
             DataHora = DateTime.UtcNow,
             Motivo = dto.Motivo ?? tipo.ToString()
         };
-
         context.Movimentacoes.Add(movimentacao);
-        estoqueRepo.Update(estoque);
+
         await estoqueRepo.SaveChangesAsync();
 
         return mapper.Map<MovimentacaoResponseDto>(movimentacao);

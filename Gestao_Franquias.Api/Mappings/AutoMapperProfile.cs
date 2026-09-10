@@ -1,6 +1,7 @@
 using Gestao_Franquias.Api.DTOs.Chamado;
 using Gestao_Franquias.Api.DTOs.Estoque;
 using Gestao_Franquias.Api.DTOs.Fornecedor;
+using Gestao_Franquias.Api.DTOs.Franqueadora;
 using Gestao_Franquias.Api.DTOs.Produto;
 using Gestao_Franquias.Api.DTOs.Royalty;
 using Gestao_Franquias.Api.DTOs.Unidade;
@@ -33,6 +34,10 @@ public class AutoMapperProfile : Profile
         // Fornecedor
         CreateMap<Fornecedor, FornecedorResponseDto>();
         CreateMap<FornecedorCreateDto, Fornecedor>();
+        
+        // Franqueadora
+        CreateMap<Franqueadora, FranqueadoraResponseDto>();
+        CreateMap<FranqueadoraCreateDto, Franqueadora>();
 
         // Estoque
         CreateMap<Estoque, EstoqueResponseDto>()

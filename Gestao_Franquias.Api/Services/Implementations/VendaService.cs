@@ -95,6 +95,6 @@ public class VendaService(
         DateTime? fim)
     {
         var vendas = await vendaRepo.ListarPorUnidadeEPeriodoAsync(unidadeId, inicio, fim);
-        return vendas.Select(v => mapper.Map<VendaResponseDto>(v));
+        return vendas.Select(mapper.Map<VendaResponseDto>);
     }
 }

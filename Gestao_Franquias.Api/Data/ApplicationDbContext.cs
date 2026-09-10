@@ -48,6 +48,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
             .Property(v => v.ValorTotal).HasColumnType("numeric(12,2)");
         modelBuilder.Entity<Royalty>()
             .Property(r => r.ValorCalculado).HasColumnType("numeric(12,2)");
+        modelBuilder.Entity<Franqueadora>()
+            .Property(f => f.Ativo).HasDefaultValue(true);
 
         base.OnModelCreating(modelBuilder);
     }

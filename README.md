@@ -144,31 +144,31 @@ Franquias.Api/
 ```
 
 ## Principais Regras de Negócio
-### 9.1 Usuários / Autenticação
+### 1. Usuários / Autenticação
 
 - E-mail único (validação em `CriarAsync`, retornando 400 se duplicado).
 - Inativação lógica (`Ativo = false`) impede login.
 - Senhas sempre hasheadas (nunca armazenar em texto puro).
 
-### 9.2 Unidades franqueadas
+### 2. Unidades franqueadas
 
 - CNPJ único.
 - Inativar (não excluir fisicamente) ao "remover" uma unidade.
 - **Unidade inativa não pode registrar novas vendas** — validar no `VendaService.CriarAsync` antes de qualquer outra coisa.
 
-### 9.3 Produtos/Serviços e Categorias
+### 3. Produtos/Serviços e Categorias
 
 - CRUD padrão; permitir filtro por nome, categoria e status.
 - Não permitir excluir fisicamente produto com vendas associadas — inativar em vez disso.
 
-### 9.4 Estoque
+### 4. Estoque
 
 - Um registro de `Estoque` por (`UnidadeFranqueadaId`, `ProdutoServicoId`) — criado automaticamente na primeira movimentação, se não existir.
 - Toda alteração de saldo passa por `MovimentacaoEstoque` (entrada/saída), nunca por update direto do campo `SaldoAtual` fora do Service.
 - **Bloquear saldo negativo**: antes de uma saída (venda ou ajuste manual), verificar `SaldoAtual - Quantidade >= 0`; se não, lançar `BusinessException("Estoque insuficiente para o produto X na unidade Y.")`.
 - Endpoint de consulta de itens abaixo do mínimo: `WHERE SaldoAtual < EstoqueMinimo`.
 
-### 9.5 Vendas
+### 5. Vendas
 
 - Uma venda pertence a **uma única unidade** e deve ter **pelo menos 1 item** (validar `Itens.Count >= 1` no DTO ou no Service antes de persistir).
 - `ValorTotal` é sempre **calculado no servidor** a partir de `Itens.Sum(i => i.Quantidade * i.PrecoUnitario)` — nunca aceito diretamente do cliente.
@@ -178,18 +178,18 @@ Franquias.Api/
     3. Persistir `Venda` e `ItemVenda`.
     4. Commit; se qualquer passo falhar, rollback e retornar erro 400 com mensagem clara.
 
-### 9.6 Royalties / Financeiro
+### 6. Royalties / Financeiro
 
 - `PercentualRoyalty` configurado por unidade (campo em `UnidadeFranqueada` ou entidade própria `ConfiguracaoRoyalty`).
 - Cálculo por período: `FaturamentoBase = Sum(Venda.ValorTotal)` das vendas da unidade dentro do intervalo de datas; `ValorCalculado = FaturamentoBase * (PercentualAplicado / 100)`.
 - `StatusPagamento`: `Pendente`, `Pago`, `Atrasado` — endpoint `PUT /api/royalties/{id}/pagamento` para registrar pagamento (com `DataPagamento`).
 - Endpoint de consulta: valores devidos x pagos por unidade/período.
 
-### 9.7 Fornecedores
+### 7. Fornecedores
 
 - CNPJ único; CRUD padrão; filtro por nome/CNPJ/status; associação opcional a produtos.
 
-### 9.8 Chamados de suporte
+### 8. Chamados de suporte
 
 - Categoria (ex.: Financeiro, Operacional, TI, Suprimentos), Prioridade (Baixa/Média/Alta/Urgente), Status (Aberto, EmAndamento, Resolvido, Encerrado).
 - `DataAbertura` automática no `Create`; `DataEncerramento` preenchida ao mudar status para Encerrado.

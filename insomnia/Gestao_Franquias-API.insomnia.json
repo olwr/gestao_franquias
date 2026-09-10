@@ -1,0 +1,2298 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-09-08T00:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v8.6.0",
+  "resources": [
+    {
+      "_id": "wrk_ab30b79312d5408db16c56a7118d9d11",
+      "_type": "workspace",
+      "parentId": null,
+      "name": "Gestão de Franquias API",
+      "description": "Coleção de testes para a API de gestão de franquias (seed: admin@franquias.com / SenhaForte123).",
+      "scope": "collection"
+    },
+    {
+      "_id": "env_65cd3ea697474480a5885814339f72fd",
+      "_type": "environment",
+      "parentId": "wrk_ab30b79312d5408db16c56a7118d9d11",
+      "name": "Base Environment",
+      "data": {},
+      "dataPropertyOrder": {},
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1789007999444
+    },
+    {
+      "_id": "env_8e88dcd2d7c24bb5beb5f18048b2eb0e",
+      "_type": "environment",
+      "parentId": "env_65cd3ea697474480a5885814339f72fd",
+      "name": "Development",
+      "data": {
+        "base_url": "http://localhost:5016/api",
+        "token_admin": "",
+        "token_gestor": "",
+        "token_operador": ""
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url",
+          "token_admin",
+          "token_gestor",
+          "token_operador"
+        ]
+      },
+      "color": "#7d69cb",
+      "isPrivate": false,
+      "metaSortKey": 1789007999444
+    },
+    {
+      "_id": "fld_157a75c1fa6a45f7838b374289c68b41",
+      "_type": "request_group",
+      "parentId": "wrk_ab30b79312d5408db16c56a7118d9d11",
+      "name": "Auth",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 1789007999445
+    },
+    {
+      "_id": "req_d2a5c619b98047ccbdc1cd52c7794baf",
+      "_type": "request",
+      "parentId": "fld_157a75c1fa6a45f7838b374289c68b41",
+      "name": "Login - Administrador",
+      "description": "",
+      "url": "{{ _.base_url }}/auth/login",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"admin@franquias.com\",\n  \"senha\": \"SenhaForte123\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 1789007999446,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_18f838ad685645949f348f82f41fedee",
+      "_type": "request",
+      "parentId": "fld_157a75c1fa6a45f7838b374289c68b41",
+      "name": "Login - Gestor Unidade Centro",
+      "description": "",
+      "url": "{{ _.base_url }}/auth/login",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"gestor.centro@franquias.com\",\n  \"senha\": \"SenhaForte123\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 1789007999447,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_cc38206920c24c319789f9298e902c62",
+      "_type": "request",
+      "parentId": "fld_157a75c1fa6a45f7838b374289c68b41",
+      "name": "Login - Operador Unidade Shopping",
+      "description": "",
+      "url": "{{ _.base_url }}/auth/login",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"operador.shopping@franquias.com\",\n  \"senha\": \"SenhaForte123\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 1789007999448,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_b1378c91eed741e38382554f69968b8a",
+      "_type": "request",
+      "parentId": "fld_157a75c1fa6a45f7838b374289c68b41",
+      "name": "Login - Credenciais invalidas (401 esperado)",
+      "description": "",
+      "url": "{{ _.base_url }}/auth/login",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"admin@franquias.com\",\n  \"senha\": \"SenhaErrada999\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 1789007999449,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_9494af65ed534b5ca0250c78427251a9",
+      "_type": "request_group",
+      "parentId": "wrk_ab30b79312d5408db16c56a7118d9d11",
+      "name": "Usuarios",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 1789007999450
+    },
+    {
+      "_id": "req_1f3a2211460c4db18ce0201c92f53bb0",
+      "_type": "request",
+      "parentId": "fld_9494af65ed534b5ca0250c78427251a9",
+      "name": "Listar usuarios",
+      "description": "",
+      "url": "{{ _.base_url }}/usuarios",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999451,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_d5571df5e304458e8ce3de7156e38b01",
+      "_type": "request",
+      "parentId": "fld_9494af65ed534b5ca0250c78427251a9",
+      "name": "Buscar usuario por id (1 = admin)",
+      "description": "",
+      "url": "{{ _.base_url }}/usuarios/1",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999452,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_cd1eb199871446bba353967d64273dd5",
+      "_type": "request",
+      "parentId": "fld_9494af65ed534b5ca0250c78427251a9",
+      "name": "Criar usuario (Gestor Shopping)",
+      "description": "",
+      "url": "{{ _.base_url }}/usuarios",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Juliana Nova Gestora\",\n  \"email\": \"juliana.gestora@franquias.com\",\n  \"senha\": \"OutraSenha456\",\n  \"perfil\": \"GestorUnidade\",\n  \"unidadeFranqueadaId\": 2\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999453,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_0715b360aae248b186bd2a55e5a54dcf",
+      "_type": "request",
+      "parentId": "fld_9494af65ed534b5ca0250c78427251a9",
+      "name": "Criar usuario com e-mail duplicado (400 esperado)",
+      "description": "",
+      "url": "{{ _.base_url }}/usuarios",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Duplicado\",\n  \"email\": \"admin@franquias.com\",\n  \"senha\": \"Qualquer123\",\n  \"perfil\": \"Operador\",\n  \"unidadeFranqueadaId\": 1\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999454,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_2d3df64f864443f2a3d801ff8ca3c812",
+      "_type": "request",
+      "parentId": "fld_9494af65ed534b5ca0250c78427251a9",
+      "name": "Inativar usuario (ajustar id)",
+      "description": "",
+      "url": "{{ _.base_url }}/usuarios/4",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999455,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_8962ae0891f34f86bb66d6247e294163",
+      "_type": "request_group",
+      "parentId": "wrk_ab30b79312d5408db16c56a7118d9d11",
+      "name": "Franqueadoras",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 1789007999456
+    },
+    {
+      "_id": "req_1c9d569476d541df8ab64c44261df936",
+      "_type": "request",
+      "parentId": "fld_8962ae0891f34f86bb66d6247e294163",
+      "name": "Listar franqueadoras",
+      "description": "",
+      "url": "{{ _.base_url }}/franqueadoras",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999457,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_5329e653bde2401a8702b724fe6b106f",
+      "_type": "request",
+      "parentId": "fld_8962ae0891f34f86bb66d6247e294163",
+      "name": "Buscar franqueadora por id (1 = seed)",
+      "description": "",
+      "url": "{{ _.base_url }}/franqueadoras/1",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999458,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_d8832bec72b34c5a9266c63f4dc45a3b",
+      "_type": "request",
+      "parentId": "fld_8962ae0891f34f86bb66d6247e294163",
+      "name": "Criar nova franqueadora",
+      "description": "",
+      "url": "{{ _.base_url }}/franqueadoras",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"razaoSocial\": \"Rede Norte Franquias Ltda\",\n  \"cnpj\": \"22233344000155\",\n  \"telefone\": \"(51) 3000-1000\",\n  \"email\": \"contato@redenorte.com.br\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999459,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_ffde487399b34e8f90bbc9ebfc3fc1cb",
+      "_type": "request",
+      "parentId": "fld_8962ae0891f34f86bb66d6247e294163",
+      "name": "Criar franqueadora com CNPJ duplicado (400 esperado)",
+      "description": "",
+      "url": "{{ _.base_url }}/franqueadoras",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"razaoSocial\": \"Duplicada Ltda\",\n  \"cnpj\": \"11111111000191\",\n  \"telefone\": \"(53) 3000-0000\",\n  \"email\": \"duplicada@franquias.com.br\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999460,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_fc3a004dae92463db49456e852fab93d",
+      "_type": "request",
+      "parentId": "fld_8962ae0891f34f86bb66d6247e294163",
+      "name": "Atualizar franqueadora (ajustar id)",
+      "description": "",
+      "url": "{{ _.base_url }}/franqueadoras/2",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"razaoSocial\": \"Rede Norte Franquias Ltda (Atualizada)\",\n  \"telefone\": \"(51) 3000-2000\",\n  \"email\": \"novocontato@redenorte.com.br\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999461,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_f47959e4f81e4fd882431580665379c2",
+      "_type": "request",
+      "parentId": "fld_8962ae0891f34f86bb66d6247e294163",
+      "name": "Criar franqueadora como Operador (403 esperado)",
+      "description": "",
+      "url": "{{ _.base_url }}/franqueadoras",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"razaoSocial\": \"Nao deveria funcionar\",\n  \"cnpj\": \"33344455000166\",\n  \"telefone\": \"(53) 3000-0000\",\n  \"email\": \"naoautorizado@franquias.com.br\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_operador }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999462,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_fec8850b03e84325beb651726bac0cef",
+      "_type": "request",
+      "parentId": "fld_8962ae0891f34f86bb66d6247e294163",
+      "name": "Atualizar franqueadora como Gestor (403 esperado, ajustar id)",
+      "description": "",
+      "url": "{{ _.base_url }}/franqueadoras/2",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"razaoSocial\": \"Nao deveria atualizar\",\n  \"telefone\": \"(53) 3000-0000\",\n  \"email\": \"naoautorizado@franquias.com.br\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999463,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_c92a96036af54869be59b5c43bd2de92",
+      "_type": "request",
+      "parentId": "fld_8962ae0891f34f86bb66d6247e294163",
+      "name": "Inativar franqueadora (ajustar id)",
+      "description": "",
+      "url": "{{ _.base_url }}/franqueadoras/2",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999464,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_709d01947c8f4540ab03cc4b75d841c7",
+      "_type": "request",
+      "parentId": "fld_8962ae0891f34f86bb66d6247e294163",
+      "name": "Buscar franqueadora inexistente (404 esperado)",
+      "description": "",
+      "url": "{{ _.base_url }}/franqueadoras/9999",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999465,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_b6b9faea828b434f966a89ef3c5e98ab",
+      "_type": "request",
+      "parentId": "fld_8962ae0891f34f86bb66d6247e294163",
+      "name": "Acessar franqueadoras sem token (401 esperado)",
+      "description": "",
+      "url": "{{ _.base_url }}/franqueadoras",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 1789007999466,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_80db6bdd6eac4cd08852257de51f3571",
+      "_type": "request_group",
+      "parentId": "wrk_ab30b79312d5408db16c56a7118d9d11",
+      "name": "Unidades Franqueadas",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 1789007999467
+    },
+    {
+      "_id": "req_698ee147c28f42a2b3b7ceabd80e8112",
+      "_type": "request",
+      "parentId": "fld_80db6bdd6eac4cd08852257de51f3571",
+      "name": "Listar todas as unidades",
+      "description": "",
+      "url": "{{ _.base_url }}/unidades",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999468,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_5739313fe2de4a93b17c09e7aa24248e",
+      "_type": "request",
+      "parentId": "fld_80db6bdd6eac4cd08852257de51f3571",
+      "name": "Listar unidades ativas",
+      "description": "",
+      "url": "{{ _.base_url }}/unidades?ativo=true",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999469,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_2148910482e747cdba227916026412cb",
+      "_type": "request",
+      "parentId": "fld_80db6bdd6eac4cd08852257de51f3571",
+      "name": "Filtrar unidades por cidade",
+      "description": "",
+      "url": "{{ _.base_url }}/unidades?cidade=Pelotas",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999470,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_db380df0776f4882873841bf3cf75616",
+      "_type": "request",
+      "parentId": "fld_80db6bdd6eac4cd08852257de51f3571",
+      "name": "Buscar unidade por id (1 = Centro)",
+      "description": "",
+      "url": "{{ _.base_url }}/unidades/1",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999471,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_fc1aa1ff224d4760bbce9802e094ace9",
+      "_type": "request",
+      "parentId": "fld_80db6bdd6eac4cd08852257de51f3571",
+      "name": "Criar unidade (Aeroporto)",
+      "description": "",
+      "url": "{{ _.base_url }}/unidades",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Unidade Aeroporto\",\n  \"cnpj\": \"99988877000155\",\n  \"endereco\": \"Av. do Aeroporto, 1200\",\n  \"cidade\": \"Pelotas\",\n  \"dataInicio\": \"2026-09-01T00:00:00Z\",\n  \"percentualRoyalty\": 5.5,\n  \"franqueadoraId\": 1\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999472,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_bbb537e3ad5e46358a6d39b1556d9a7a",
+      "_type": "request",
+      "parentId": "fld_80db6bdd6eac4cd08852257de51f3571",
+      "name": "Criar unidade com CNPJ duplicado (400 esperado)",
+      "description": "",
+      "url": "{{ _.base_url }}/unidades",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Unidade Duplicada\",\n  \"cnpj\": \"12345678000101\",\n  \"endereco\": \"Rua Teste, 1\",\n  \"cidade\": \"Pelotas\",\n  \"dataInicio\": \"2026-09-01T00:00:00Z\",\n  \"percentualRoyalty\": 5.0,\n  \"franqueadoraId\": 1\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999473,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_5effdaeadbe34ea48971710f06bba585",
+      "_type": "request",
+      "parentId": "fld_80db6bdd6eac4cd08852257de51f3571",
+      "name": "Atualizar unidade (ajustar id)",
+      "description": "",
+      "url": "{{ _.base_url }}/unidades/4",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Unidade Aeroporto (Renovada)\",\n  \"endereco\": \"Av. do Aeroporto, 1500\",\n  \"cidade\": \"Pelotas\",\n  \"percentualRoyalty\": 6.0\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999474,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_f13d5803e95547fba34c78b273addc64",
+      "_type": "request",
+      "parentId": "fld_80db6bdd6eac4cd08852257de51f3571",
+      "name": "Criar unidade como Operador (403 esperado)",
+      "description": "",
+      "url": "{{ _.base_url }}/unidades",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Unidade Nao Autorizada\",\n  \"cnpj\": \"11122233000144\",\n  \"endereco\": \"Rua Teste, 99\",\n  \"cidade\": \"Pelotas\",\n  \"dataInicio\": \"2026-09-01T00:00:00Z\",\n  \"percentualRoyalty\": 5.0,\n  \"franqueadoraId\": 1\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_operador }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999475,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_db4fb651027b40929100a0920f375824",
+      "_type": "request",
+      "parentId": "fld_80db6bdd6eac4cd08852257de51f3571",
+      "name": "Inativar unidade (ajustar id)",
+      "description": "",
+      "url": "{{ _.base_url }}/unidades/4",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999476,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_e2fb4320aef046fc9c6b5ac7821fe5d6",
+      "_type": "request",
+      "parentId": "fld_80db6bdd6eac4cd08852257de51f3571",
+      "name": "Buscar unidade inexistente (404 esperado)",
+      "description": "",
+      "url": "{{ _.base_url }}/unidades/9999",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999477,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_dba0a1be36164c23950d1cb95b8c41ca",
+      "_type": "request",
+      "parentId": "fld_80db6bdd6eac4cd08852257de51f3571",
+      "name": "Acessar unidades sem token (401 esperado)",
+      "description": "",
+      "url": "{{ _.base_url }}/unidades",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 1789007999478,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_a32e864fc9ff47edbfb077419c5fc8e6",
+      "_type": "request_group",
+      "parentId": "wrk_ab30b79312d5408db16c56a7118d9d11",
+      "name": "Categorias e Produtos",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 1789007999479
+    },
+    {
+      "_id": "req_d184fac709094b62ac0040c0240c2983",
+      "_type": "request",
+      "parentId": "fld_a32e864fc9ff47edbfb077419c5fc8e6",
+      "name": "Listar categorias",
+      "description": "",
+      "url": "{{ _.base_url }}/categorias",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999480,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_98bf94477e524bc980ac25a77154c5d0",
+      "_type": "request",
+      "parentId": "fld_a32e864fc9ff47edbfb077419c5fc8e6",
+      "name": "Criar categoria (Combos)",
+      "description": "",
+      "url": "{{ _.base_url }}/categorias",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Combos\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999481,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_e2145920d119474391d273fa5d027cd5",
+      "_type": "request",
+      "parentId": "fld_a32e864fc9ff47edbfb077419c5fc8e6",
+      "name": "Listar todos os produtos",
+      "description": "",
+      "url": "{{ _.base_url }}/produtos",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999482,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_38b37a3ac4744b32814a0952ce40c3c7",
+      "_type": "request",
+      "parentId": "fld_a32e864fc9ff47edbfb077419c5fc8e6",
+      "name": "Filtrar produtos por categoria (1 = Bebidas)",
+      "description": "",
+      "url": "{{ _.base_url }}/produtos?categoriaId=1",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999483,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_5d246e0e99a54801b90d2bd48df1a33b",
+      "_type": "request",
+      "parentId": "fld_a32e864fc9ff47edbfb077419c5fc8e6",
+      "name": "Buscar produto por nome parcial",
+      "description": "",
+      "url": "{{ _.base_url }}/produtos?nome=Hamb",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999484,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_bbd230fed2664e61a36a4e3b1a0288b2",
+      "_type": "request",
+      "parentId": "fld_a32e864fc9ff47edbfb077419c5fc8e6",
+      "name": "Criar produto (Wrap de Frango)",
+      "description": "",
+      "url": "{{ _.base_url }}/produtos",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Wrap de Frango\",\n  \"descricao\": \"Wrap integral com frango grelhado e salada\",\n  \"precoBase\": 18.5,\n  \"categoriaId\": 2,\n  \"fornecedorId\": 2\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999485,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_a7dddcb1109a474f96fbfd20c600c849",
+      "_type": "request",
+      "parentId": "fld_a32e864fc9ff47edbfb077419c5fc8e6",
+      "name": "Inativar produto (ajustar id)",
+      "description": "",
+      "url": "{{ _.base_url }}/produtos/6",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999486,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_83375c817c8b4e71b61d549c81c9efb3",
+      "_type": "request_group",
+      "parentId": "wrk_ab30b79312d5408db16c56a7118d9d11",
+      "name": "Fornecedores",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 1789007999487
+    },
+    {
+      "_id": "req_1586e2f43fcd4e5abdb3b5925d3a6397",
+      "_type": "request",
+      "parentId": "fld_83375c817c8b4e71b61d549c81c9efb3",
+      "name": "Listar fornecedores",
+      "description": "",
+      "url": "{{ _.base_url }}/fornecedores",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999488,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_63baa86461f1494684b63a530c40403d",
+      "_type": "request",
+      "parentId": "fld_83375c817c8b4e71b61d549c81c9efb3",
+      "name": "Criar fornecedor",
+      "description": "",
+      "url": "{{ _.base_url }}/fornecedores",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Embalagens Sul Ltda\",\n  \"cnpj\": \"55566677000188\",\n  \"contato\": \"(53) 3222-3000\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999489,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_4e468cd0f0a342f4a0217e479dd11cd4",
+      "_type": "request",
+      "parentId": "fld_83375c817c8b4e71b61d549c81c9efb3",
+      "name": "Criar fornecedor com CNPJ duplicado (400 esperado)",
+      "description": "",
+      "url": "{{ _.base_url }}/fornecedores",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Duplicado Ltda\",\n  \"cnpj\": \"33344455000166\",\n  \"contato\": \"(53) 3000-0000\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999490,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_09da69120dfb400dbf96a4fb02f96ed3",
+      "_type": "request_group",
+      "parentId": "wrk_ab30b79312d5408db16c56a7118d9d11",
+      "name": "Estoque",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 1789007999491
+    },
+    {
+      "_id": "req_a3e3efc1ac694d08932355149b4daa18",
+      "_type": "request",
+      "parentId": "fld_09da69120dfb400dbf96a4fb02f96ed3",
+      "name": "Listar estoque - Unidade Centro (1)",
+      "description": "",
+      "url": "{{ _.base_url }}/estoques/unidade/1",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999492,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_64fdd58e8adb4e778b11e72a7c9d7a0e",
+      "_type": "request",
+      "parentId": "fld_09da69120dfb400dbf96a4fb02f96ed3",
+      "name": "Listar estoque - Unidade Shopping (2)",
+      "description": "",
+      "url": "{{ _.base_url }}/estoques/unidade/2",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_operador }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999493,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_1c5c305e4c524bf4a090ad8d72a5b616",
+      "_type": "request",
+      "parentId": "fld_09da69120dfb400dbf96a4fb02f96ed3",
+      "name": "Listar itens em estoque critico",
+      "description": "",
+      "url": "{{ _.base_url }}/estoques/criticos",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999494,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_df835b07a1074ea6b0f1c038c8f1616b",
+      "_type": "request",
+      "parentId": "fld_09da69120dfb400dbf96a4fb02f96ed3",
+      "name": "Registrar entrada de estoque",
+      "description": "",
+      "url": "{{ _.base_url }}/estoques/movimentacoes",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"unidadeFranqueadaId\": 1,\n  \"produtoServicoId\": 1,\n  \"tipo\": \"Entrada\",\n  \"quantidade\": 30,\n  \"motivo\": \"Reposicao semanal\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999495,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_c467b2923b8c4f169c821a0af60b034c",
+      "_type": "request",
+      "parentId": "fld_09da69120dfb400dbf96a4fb02f96ed3",
+      "name": "Registrar saida manual (ajuste/perda)",
+      "description": "",
+      "url": "{{ _.base_url }}/estoques/movimentacoes",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"unidadeFranqueadaId\": 1,\n  \"produtoServicoId\": 1,\n  \"tipo\": \"Saida\",\n  \"quantidade\": 5,\n  \"motivo\": \"Produto danificado\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999496,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_39b5abe98eaf41389cbd35dfa8460a93",
+      "_type": "request",
+      "parentId": "fld_09da69120dfb400dbf96a4fb02f96ed3",
+      "name": "Saida acima do saldo (400 esperado)",
+      "description": "",
+      "url": "{{ _.base_url }}/estoques/movimentacoes",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"unidadeFranqueadaId\": 1,\n  \"produtoServicoId\": 1,\n  \"tipo\": \"Saida\",\n  \"quantidade\": 99999,\n  \"motivo\": \"Teste estoque insuficiente\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999497,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_bbf62372076e4703b30e1fca8b3b40bf",
+      "_type": "request",
+      "parentId": "fld_09da69120dfb400dbf96a4fb02f96ed3",
+      "name": "Tipo de movimentacao invalido (400 esperado)",
+      "description": "",
+      "url": "{{ _.base_url }}/estoques/movimentacoes",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"unidadeFranqueadaId\": 1,\n  \"produtoServicoId\": 1,\n  \"tipo\": \"Transferencia\",\n  \"quantidade\": 1,\n  \"motivo\": \"Tipo invalido\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999498,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_9c8d01444132434e980fd7535935d450",
+      "_type": "request_group",
+      "parentId": "wrk_ab30b79312d5408db16c56a7118d9d11",
+      "name": "Vendas",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 1789007999499
+    },
+    {
+      "_id": "req_64b521fc886e4d14a947cdf374a74515",
+      "_type": "request",
+      "parentId": "fld_9c8d01444132434e980fd7535935d450",
+      "name": "Registrar venda valida (Unidade Centro)",
+      "description": "",
+      "url": "{{ _.base_url }}/vendas",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"unidadeFranqueadaId\": 1,\n  \"usuarioId\": 2,\n  \"itens\": [\n    {\n      \"produtoServicoId\": 1,\n      \"quantidade\": 2\n    },\n    {\n      \"produtoServicoId\": 3,\n      \"quantidade\": 1\n    }\n  ]\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999500,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_ebd3007311e34e278607e533d52932d3",
+      "_type": "request",
+      "parentId": "fld_9c8d01444132434e980fd7535935d450",
+      "name": "Listar vendas - Unidade Centro",
+      "description": "",
+      "url": "{{ _.base_url }}/vendas/unidade/1",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999501,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_5e8c6542ccc24a1686af017abe4493ab",
+      "_type": "request",
+      "parentId": "fld_9c8d01444132434e980fd7535935d450",
+      "name": "Listar vendas por periodo",
+      "description": "",
+      "url": "{{ _.base_url }}/vendas/unidade/1?inicio=2026-09-01T00:00:00Z&fim=2026-09-30T23:59:59Z",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999502,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_0d70375a48bb411e95a5eebf993c6273",
+      "_type": "request",
+      "parentId": "fld_9c8d01444132434e980fd7535935d450",
+      "name": "Venda com quantidade acima do estoque (400 esperado)",
+      "description": "",
+      "url": "{{ _.base_url }}/vendas",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"unidadeFranqueadaId\": 1,\n  \"usuarioId\": 2,\n  \"itens\": [\n    {\n      \"produtoServicoId\": 5,\n      \"quantidade\": 99999\n    }\n  ]\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999503,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_f98fa94edbdc476d97b51833cd46597d",
+      "_type": "request",
+      "parentId": "fld_9c8d01444132434e980fd7535935d450",
+      "name": "Venda sem itens (400 esperado)",
+      "description": "",
+      "url": "{{ _.base_url }}/vendas",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"unidadeFranqueadaId\": 1,\n  \"usuarioId\": 2,\n  \"itens\": []\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999504,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_99bf7ac57d55404f82f30d9d84a9c246",
+      "_type": "request",
+      "parentId": "fld_9c8d01444132434e980fd7535935d450",
+      "name": "Venda para unidade inativa (400 esperado)",
+      "description": "",
+      "url": "{{ _.base_url }}/vendas",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"unidadeFranqueadaId\": 3,\n  \"usuarioId\": 1,\n  \"itens\": [\n    {\n      \"produtoServicoId\": 1,\n      \"quantidade\": 1\n    }\n  ]\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999505,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_a25042de257447aca49e28d4ef0f1597",
+      "_type": "request",
+      "parentId": "fld_9c8d01444132434e980fd7535935d450",
+      "name": "Venda com produto inexistente (404 esperado)",
+      "description": "",
+      "url": "{{ _.base_url }}/vendas",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"unidadeFranqueadaId\": 1,\n  \"usuarioId\": 2,\n  \"itens\": [\n    {\n      \"produtoServicoId\": 9999,\n      \"quantidade\": 1\n    }\n  ]\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999506,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_57566dd9bddb4b3784415c241fa06db2",
+      "_type": "request_group",
+      "parentId": "wrk_ab30b79312d5408db16c56a7118d9d11",
+      "name": "Royalties",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 1789007999507
+    },
+    {
+      "_id": "req_10c57a8ead4e4d5dac1f992e2fc7f9a4",
+      "_type": "request",
+      "parentId": "fld_57566dd9bddb4b3784415c241fa06db2",
+      "name": "Listar royalties - Unidade Centro (Pago no seed)",
+      "description": "",
+      "url": "{{ _.base_url }}/royalties/unidade/1",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999508,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_3de36608ff274c41a603590931d93f9e",
+      "_type": "request",
+      "parentId": "fld_57566dd9bddb4b3784415c241fa06db2",
+      "name": "Listar royalties - Unidade Shopping (Pendente no seed)",
+      "description": "",
+      "url": "{{ _.base_url }}/royalties/unidade/2",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999509,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_98e5e29e60bb49aaba8425e3b2b1af99",
+      "_type": "request",
+      "parentId": "fld_57566dd9bddb4b3784415c241fa06db2",
+      "name": "Calcular royalty do mes corrente",
+      "description": "",
+      "url": "{{ _.base_url }}/royalties/calcular?unidadeId=1&periodoReferencia=2026-09-01",
+      "method": "POST",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999510,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_c0c406215e1e4c11b80eb49c9298d591",
+      "_type": "request",
+      "parentId": "fld_57566dd9bddb4b3784415c241fa06db2",
+      "name": "Registrar pagamento (ajustar id)",
+      "description": "",
+      "url": "{{ _.base_url }}/royalties/3/pagamento",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"dataPagamento\": \"2026-09-10T00:00:00Z\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999511,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_c998d017b75b46ca863447d0dc011e1f",
+      "_type": "request",
+      "parentId": "fld_57566dd9bddb4b3784415c241fa06db2",
+      "name": "Acessar royalties como Gestor (403 esperado)",
+      "description": "",
+      "url": "{{ _.base_url }}/royalties/unidade/1",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999512,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_f9e4b21450c948e99d0c5e1ca8cfe879",
+      "_type": "request_group",
+      "parentId": "wrk_ab30b79312d5408db16c56a7118d9d11",
+      "name": "Chamados de Suporte",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 1789007999513
+    },
+    {
+      "_id": "req_bd7aee3dcd7541f0837298955d7fb442",
+      "_type": "request",
+      "parentId": "fld_f9e4b21450c948e99d0c5e1ca8cfe879",
+      "name": "Listar chamados - Unidade Centro",
+      "description": "",
+      "url": "{{ _.base_url }}/chamados/unidade/1",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999514,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_08379d305ba44ba7ac261bbb4a68aa98",
+      "_type": "request",
+      "parentId": "fld_f9e4b21450c948e99d0c5e1ca8cfe879",
+      "name": "Listar chamados - Unidade Shopping",
+      "description": "",
+      "url": "{{ _.base_url }}/chamados/unidade/2",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_operador }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999515,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_aa16bc0727b44c629b4932f78e0d684b",
+      "_type": "request",
+      "parentId": "fld_f9e4b21450c948e99d0c5e1ca8cfe879",
+      "name": "Abrir novo chamado",
+      "description": "",
+      "url": "{{ _.base_url }}/chamados",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"unidadeFranqueadaId\": 2,\n  \"categoria\": \"TI\",\n  \"prioridade\": \"Alta\",\n  \"descricao\": \"Impressora de comandas nao esta funcionando.\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_operador }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999516,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_00b9482b7ffd43489ce004cbfdbd34f6",
+      "_type": "request",
+      "parentId": "fld_f9e4b21450c948e99d0c5e1ca8cfe879",
+      "name": "Atualizar status para EmAndamento (ajustar id)",
+      "description": "",
+      "url": "{{ _.base_url }}/chamados/4/status",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"status\": \"EmAndamento\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999517,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_8ab4dcc692fb4e1d9bf158f72a8a15c2",
+      "_type": "request",
+      "parentId": "fld_f9e4b21450c948e99d0c5e1ca8cfe879",
+      "name": "Encerrar chamado (ajustar id)",
+      "description": "",
+      "url": "{{ _.base_url }}/chamados/4/status",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"status\": \"Encerrado\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999518,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_46a3d6d21e59444ab3dd63e4140b21e0",
+      "_type": "request_group",
+      "parentId": "wrk_ab30b79312d5408db16c56a7118d9d11",
+      "name": "Relatorios",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 1789007999519
+    },
+    {
+      "_id": "req_7345ab5a46814f7c8a2c9c2c30a7f19a",
+      "_type": "request",
+      "parentId": "fld_46a3d6d21e59444ab3dd63e4140b21e0",
+      "name": "Faturamento por unidade",
+      "description": "",
+      "url": "{{ _.base_url }}/relatorios/faturamento",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999520,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_baa0063419c64333a1254758897c0327",
+      "_type": "request",
+      "parentId": "fld_46a3d6d21e59444ab3dd63e4140b21e0",
+      "name": "Faturamento por unidade e periodo",
+      "description": "",
+      "url": "{{ _.base_url }}/relatorios/faturamento?inicio=2026-08-01T00:00:00Z&fim=2026-09-30T23:59:59Z",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999521,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_7f496150aaf446efb0686da1b67423c5",
+      "_type": "request",
+      "parentId": "fld_46a3d6d21e59444ab3dd63e4140b21e0",
+      "name": "Produtos mais vendidos (top 5)",
+      "description": "",
+      "url": "{{ _.base_url }}/relatorios/produtos-mais-vendidos?top=5",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999522,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_ae013d8f79724bdc990c6f714c1e3949",
+      "_type": "request",
+      "parentId": "fld_46a3d6d21e59444ab3dd63e4140b21e0",
+      "name": "Chamados por status",
+      "description": "",
+      "url": "{{ _.base_url }}/relatorios/chamados-por-status",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_gestor }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999523,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_de9d83434f254fa7b4b7a8248a232714",
+      "_type": "request",
+      "parentId": "fld_46a3d6d21e59444ab3dd63e4140b21e0",
+      "name": "Faturamento como Operador (403 esperado)",
+      "description": "",
+      "url": "{{ _.base_url }}/relatorios/faturamento",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_operador }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999524,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "fld_8a1f9ea323644346a48c0876f6361801",
+      "_type": "request_group",
+      "parentId": "wrk_ab30b79312d5408db16c56a7118d9d11",
+      "name": "Cenarios de Erro (evidencias)",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": 1789007999525
+    },
+    {
+      "_id": "req_446b46439db74e54877eeac3e696a411",
+      "_type": "request",
+      "parentId": "fld_8a1f9ea323644346a48c0876f6361801",
+      "name": "401 - sem token",
+      "description": "",
+      "url": "{{ _.base_url }}/unidades",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": 1789007999526,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_dde68f7a60c643e7ad51b22be20676cf",
+      "_type": "request",
+      "parentId": "fld_8a1f9ea323644346a48c0876f6361801",
+      "name": "401 - token invalido",
+      "description": "",
+      "url": "{{ _.base_url }}/unidades",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer token.invalido.aqui"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": 1789007999527,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_116f304fe0874cc8b8282ccc844f7dae",
+      "_type": "request",
+      "parentId": "fld_8a1f9ea323644346a48c0876f6361801",
+      "name": "403 - Operador criando unidade",
+      "description": "",
+      "url": "{{ _.base_url }}/unidades",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"Nao deveria funcionar\",\n  \"cnpj\": \"00000000000100\",\n  \"endereco\": \"Rua X\",\n  \"cidade\": \"Pelotas\",\n  \"dataInicio\": \"2026-09-01T00:00:00Z\",\n  \"percentualRoyalty\": 5.0,\n  \"franqueadoraId\": 1\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_operador }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999528,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_5573fcd67f514638bdd07c16ed264f60",
+      "_type": "request",
+      "parentId": "fld_8a1f9ea323644346a48c0876f6361801",
+      "name": "404 - recurso inexistente",
+      "description": "",
+      "url": "{{ _.base_url }}/unidades/999999",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999529,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_f696b0d5250d46f98f31045bc840655d",
+      "_type": "request",
+      "parentId": "fld_8a1f9ea323644346a48c0876f6361801",
+      "name": "400 - CNPJ duplicado (Franqueadora)",
+      "description": "",
+      "url": "{{ _.base_url }}/franqueadoras",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"razaoSocial\": \"CNPJ Duplicado\",\n  \"cnpj\": \"11111111000191\",\n  \"telefone\": \"(53) 3000-0000\",\n  \"email\": \"duplicado@franquias.com.br\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999530,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    },
+    {
+      "_id": "req_c9e5429d6d824035bcc66c311ab86392",
+      "_type": "request",
+      "parentId": "fld_8a1f9ea323644346a48c0876f6361801",
+      "name": "400 - CNPJ duplicado",
+      "description": "",
+      "url": "{{ _.base_url }}/unidades",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"nome\": \"CNPJ Duplicado\",\n  \"cnpj\": \"12345678000202\",\n  \"endereco\": \"Rua Y\",\n  \"cidade\": \"Pelotas\",\n  \"dataInicio\": \"2026-09-01T00:00:00Z\",\n  \"percentualRoyalty\": 5.0,\n  \"franqueadoraId\": 1\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token_admin }}",
+        "prefix": ""
+      },
+      "metaSortKey": 1789007999531,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global"
+    }
+  ]
+}
